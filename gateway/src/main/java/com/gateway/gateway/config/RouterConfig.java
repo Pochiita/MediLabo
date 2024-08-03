@@ -11,7 +11,7 @@ public class RouterConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route(r -> r.path("/patient/**")
+                .route(r -> r.path("/patients/**")
                         .uri("http://localhost:8092"))  // Use patients microservice
                 /*.route(r -> r.path("/api/notes/**")
                         .uri("http://notes-ms:9000"))  // Use notes microservice

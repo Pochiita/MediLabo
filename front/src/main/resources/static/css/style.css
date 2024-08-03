@@ -1,0 +1,26 @@
+nav.navbar{
+    background-color:white !important;
+    border-bottom: solid 2px #d53828;
+}
+
+nav img{
+    width:10%;
+}
+
+form.border{
+    border:solid 1px #d53828 !important;
+}
+
+button{
+    background-color:#d53828 !important;
+    border:none !important;
+}
+
+
+
+.links-nav a{
+    color:#d53828;
+    text-decoration:none;
+    font-weight:600;
+    font-family:sans-serif;
+}
