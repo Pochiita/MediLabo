@@ -31,7 +31,7 @@ public class PatientController {
     }
 
     @GetMapping("/single/{id}")
-    public ResponseEntity<?> patientById (@PathVariable int id){
+    public ResponseEntity<?> patientById (@PathVariable("id") int id){
         try{
             PatientDTO patient = patientService.getPatientById(id);
             return ResponseEntity.ok(patient);
@@ -41,7 +41,7 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping("/single/add")
     public ResponseEntity<?> addPatient(@RequestBody PatientDTO patientDTO){
         try{
             Patient patient = patientService.createPatient(patientDTO);
@@ -51,6 +51,30 @@ public class PatientController {
                     .body("An error occured when trying to save the patient");
         }
     }
+
+    @PostMapping("/single/modify/{id}")
+    public ResponseEntity<?> modifyPatient(@RequestBody PatientDTO patientDTO,@PathVariable("id") int id){
+        try{
+            Patient patient = patientService.modifyPatient(patientDTO,id);
+            return ResponseEntity.ok(patient);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occured when trying to modify the patient with id: "+id);
+        }
+    }
+
+    @PostMapping("/single/delete/{id}")
+    public ResponseEntity<?> deletePatient(@PathVariable("id") int id){
+        try{
+            Boolean isPatientDeleted = patientService.deletePatient(id);
+            return ResponseEntity.ok(isPatientDeleted);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occured when trying to delete the patient with id: "+id);
+        }
+    }
+
+
 
 
 }

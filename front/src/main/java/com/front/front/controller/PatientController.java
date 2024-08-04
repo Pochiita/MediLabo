@@ -1,16 +1,13 @@
 package com.front.front.controller;
 
+import com.front.front.DTO.PatientDTO;
 import com.front.front.proxies.PatientProxy;
-import feign.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -44,9 +41,67 @@ public class PatientController {
             model.addAttribute("patient",response.getBody() != null ? response.getBody() : Collections.emptyList());
             return "patient";
         }catch(Exception e) {
-            model.addAttribute("error",true);
+            model.addAttribute("notFindable",true);
             return "patient";
 
+        }
+    }
+
+    @GetMapping("/single/add")
+    public String createPatientPage(Model model){
+        PatientDTO patient = new PatientDTO();
+        model.addAttribute("patient",patient);
+        return "addPatient";
+    }
+
+    @PostMapping("/single/add/process")
+    public String createPatientProcess (@Valid @ModelAttribute("patient") PatientDTO patientDTO, BindingResult results,Model model){
+        if (results.hasErrors() || results.hasFieldErrors()){
+            model.addAttribute("patient",patientDTO);
+            return "addPatient";
+        }
+        System.out.println(results.getFieldValue("firstname"));
+
+        try {
+            ResponseEntity<?> response = patientProxy.addPatient(patientDTO);
+            System.out.println(response);
+            return "redirect:/patients";
+        }catch(Exception e) {
+            System.out.println("hello");
+            model.addAttribute("error",true);
+            return "redirect:/patients/single/add";
+        }
+    }
+
+    @GetMapping("/single/modify/{id}")
+    public String modifyPatientPage(Model model){
+        return "modifyPatient";
+    }
+
+    @PostMapping("/single/modify/process/{id}")
+    public String modifyPatientProcess (@Valid @ModelAttribute("patient")PatientDTO patientDTO,@PathVariable("id") int id, BindingResult results,Model model){
+        if (results.hasErrors() || results.hasFieldErrors()){
+            model.addAttribute("patient",patientDTO);
+            return "modifyPatient";
+        }
+
+        try {
+            ResponseEntity<?> response = patientProxy.modifyPatient(patientDTO,id);
+            return "redirect:/patients/single/"+id;
+        }catch(Exception e) {
+            model.addAttribute("error",true);
+            return "redirect:/patients/single/modify/"+id;
+        }
+    }
+
+    @PostMapping("/single/delete/process/{id}")
+    public String deletePatientProcess (@PathVariable("id") int id, BindingResult results,Model model) {
+        try {
+            ResponseEntity<?> response = patientProxy.deletePatient(id);
+            return "patients";
+        }catch(Exception e) {
+            model.addAttribute("notDeletable",true);
+            return "patients";
         }
     }
 }

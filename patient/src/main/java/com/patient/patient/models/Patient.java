@@ -20,6 +20,7 @@ public class Patient {
     int id;
 
     @Column(nullable = false)
+    @NotNull
     String firstname;
 
     @Column(nullable = false)

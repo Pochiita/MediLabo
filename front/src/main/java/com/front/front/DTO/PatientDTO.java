@@ -3,17 +3,16 @@ package com.front.front.DTO;
 import com.front.front.models.Gender;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Entity
+@Getter
+@Setter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "patient")
 public class PatientDTO {
 
     @GeneratedValue
@@ -23,22 +22,26 @@ public class PatientDTO {
     @Column(nullable = false)
     @NotNull
     @NotEmpty
+    @NotBlank
     String firstname;
 
     @Column(nullable = false)
     @NotNull
     @NotEmpty
+    @NotBlank
+
     String lastname;
 
     @Column(nullable = false)
     @NotNull
     @NotEmpty
+    @NotBlank
+
     String bd;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @NotNull
-    @NotEmpty
     Gender gender;
 
     @Column(nullable = true)

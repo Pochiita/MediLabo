@@ -52,9 +52,33 @@ public class PatientService {
         try {
             Patient patient = new Patient();
             BeanUtils.copyProperties(patientDTO,patient);
+            System.out.println(patient.getBd() == null);
             return patientRepository.save(patient);
         }catch(Exception e){
             throw new Exception("Impossible to create the patient");
+        }
+    }
+
+    public Patient modifyPatient(PatientDTO patientDTO , int id) throws Exception {
+        try {
+            Patient patient = new Patient();
+            BeanUtils.copyProperties(patientDTO,patient);
+            patient.setId(id);
+            return patientRepository.save(patient);
+        }catch(Exception e){
+            throw new Exception("Impossible to modify the patient");
+        }
+    }
+
+    public boolean deletePatient( int id) throws Exception {
+        try {
+            PatientDTO patient = this.getPatientById(id);
+            Patient actualPatient = new Patient();
+            BeanUtils.copyProperties(patient,actualPatient);
+            patientRepository.delete(actualPatient);
+            return true;
+        }catch(Exception e){
+            throw new Exception("Impossible to modify the patient");
         }
     }
 }
