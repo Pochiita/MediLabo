@@ -40,8 +40,7 @@ public class PatientController {
     public String getPatientById(Model model, @PathVariable("id") int id){
         try {
             ResponseEntity<?> response = patientProxy.getPatientById(id);
-            PatientDTO patientDTO = (PatientDTO) response.getBody();
-            model.addAttribute("patient",patientDTO);
+            model.addAttribute("patient",response.getBody());
             return "patient";
         }catch(Exception e) {
             model.addAttribute("notFindable",true);
