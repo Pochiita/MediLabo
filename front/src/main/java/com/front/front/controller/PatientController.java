@@ -3,6 +3,8 @@ package com.front.front.controller;
 import com.front.front.DTO.PatientDTO;
 import com.front.front.proxies.PatientProxy;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +40,8 @@ public class PatientController {
     public String getPatientById(Model model, @PathVariable("id") int id){
         try {
             ResponseEntity<?> response = patientProxy.getPatientById(id);
-            model.addAttribute("patient",response.getBody() != null ? response.getBody() : Collections.emptyList());
+            PatientDTO patientDTO = (PatientDTO) response.getBody();
+            model.addAttribute("patient",patientDTO);
             return "patient";
         }catch(Exception e) {
             model.addAttribute("notFindable",true);
@@ -60,22 +63,27 @@ public class PatientController {
             model.addAttribute("patient",patientDTO);
             return "addPatient";
         }
-        System.out.println(results.getFieldValue("firstname"));
 
         try {
             ResponseEntity<?> response = patientProxy.addPatient(patientDTO);
-            System.out.println(response);
             return "redirect:/patients";
         }catch(Exception e) {
-            System.out.println("hello");
             model.addAttribute("error",true);
             return "redirect:/patients/single/add";
         }
     }
 
     @GetMapping("/single/modify/{id}")
-    public String modifyPatientPage(Model model){
-        return "modifyPatient";
+    public String modifyPatientPage(Model model,@PathVariable("id") int id){
+        try {
+            ResponseEntity<?> response = patientProxy.getPatientById(id);
+            model.addAttribute("patient",response.getBody());
+            model.addAttribute("id",id);
+            return "modifyPatient";
+        }catch(Exception e) {
+            model.addAttribute("notFindable",true);
+            return "modifyPatient";
+        }
     }
 
     @PostMapping("/single/modify/process/{id}")

@@ -31,13 +31,12 @@ public class PatientController {
     }
 
     @GetMapping("/single/{id}")
-    public ResponseEntity<?> patientById (@PathVariable("id") int id){
+    public ResponseEntity<PatientDTO> patientById (@PathVariable("id") int id){
         try{
             PatientDTO patient = patientService.getPatientById(id);
             return ResponseEntity.ok(patient);
         }catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("An error occurred when fetching patient with id "+ id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

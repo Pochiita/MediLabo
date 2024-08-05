@@ -32,12 +32,26 @@
                 <p>Still no user in database</p>
             </div>
             <div th:if="${patients.size() > 0}">
-                <p>Users found:</p>
-                <ul>
-                    <li th:each="patient : ${patients}">
-                        <span th:text="${patient.name}">Patient Name</span>
-                    </li>
-                </ul>
+                <div th:each="patient : ${patients}">
+                    <div>
+                        <div class="image-container">
+                            <img th:src="@{/img/pp.png}" alt="">
+                        </div>
+                        <div class="name-container">
+                            <p th:text="${patient.firstname + ' '+patient.lastname}"></p>
+                        </div>
+                        <div class="base-info">
+                            <div class="bd-container">
+                                <p>Birthdate :</p>
+                                <p th:text="${patient.bd}"></p>
+                            </div>
+                            <div class="gender-container">
+                                <p>Gender :</p>
+                                <p th:text="${patient.gender}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

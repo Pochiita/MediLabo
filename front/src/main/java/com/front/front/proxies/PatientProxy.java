@@ -16,7 +16,7 @@ public interface PatientProxy {
     ResponseEntity<?> getAllPatients();
 
     @GetMapping(value = "/single/{id}")
-    ResponseEntity<?> getPatientById(@PathVariable("id") int id);
+    ResponseEntity<PatientDTO> getPatientById(@PathVariable("id") int id);
 
     @PostMapping(value = "/single/add")
     ResponseEntity<?> addPatient(@RequestBody PatientDTO patientDTO);
