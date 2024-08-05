@@ -30,7 +30,7 @@
         <div th:if="${notFindable == null}">
             <h2>Patient Registration</h2>
 
-            <form action="#" th:action="@{/patients/single/modify/process/{id}(id=${id})}" th:object="${patient}" method="post">
+            <form action="#" th:action="@{/patients/single/modify/process/{id}(id=${patient.id})}" th:object="${patient}" method="post">
 
                 <div>
                     <label for="firstname">First Name:</label>

@@ -13,6 +13,8 @@ import lombok.*;
 @Setter
 public class PatientDTO {
 
+    int id;
+
     @NotNull
     @NotEmpty
     String firstname;

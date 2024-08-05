@@ -77,7 +77,6 @@ public class PatientController {
         try {
             ResponseEntity<?> response = patientProxy.getPatientById(id);
             model.addAttribute("patient",response.getBody());
-            model.addAttribute("id",id);
             return "modifyPatient";
         }catch(Exception e) {
             model.addAttribute("notFindable",true);
@@ -101,14 +100,14 @@ public class PatientController {
         }
     }
 
-    @PostMapping("/single/delete/process/{id}")
-    public String deletePatientProcess (@PathVariable("id") int id, BindingResult results,Model model) {
+    @GetMapping("/single/delete/process/{id}")
+    public String deletePatientProcess (@PathVariable("id") int id,Model model) {
         try {
             ResponseEntity<?> response = patientProxy.deletePatient(id);
-            return "patients";
+            return "redirect:/patients/";
         }catch(Exception e) {
             model.addAttribute("notDeletable",true);
-            return "patients";
+            return "redirect:/patients/single/"+id;
         }
     }
 }

@@ -15,7 +15,6 @@ import lombok.*;
 @AllArgsConstructor
 public class PatientDTO {
 
-    @GeneratedValue
     @Id
     int id;
 
