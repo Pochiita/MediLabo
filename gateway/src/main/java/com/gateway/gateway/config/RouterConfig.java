@@ -13,9 +13,9 @@ public class RouterConfig {
         return builder.routes()
                 .route(r -> r.path("/patients/**")
                         .uri("http://localhost:8092"))  // Use patients microservice
-                /*.route(r -> r.path("/api/notes/**")
-                        .uri("http://notes-ms:9000"))  // Use notes microservice
-                .route(r -> r.path("/api/healthrisks/**")
+                .route(r -> r.path("/notes/**")
+                        .uri("http://localhost:8093"))  // Use notes microservice
+                /*.route(r -> r.path("/api/healthrisks/**")
                         .uri("http://healthrisks:9003"))  // Use healthrisk  microservice*/
                 .build();
     }
