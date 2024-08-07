@@ -1,5 +1,6 @@
 package com.front.front.proxies;
 
+import com.front.front.DTO.NoteDTO;
 import com.front.front.models.Note;
 import org.bson.types.ObjectId;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -17,7 +18,7 @@ public interface NoteProxy {
     @GetMapping("/{id}")
     ResponseEntity<Note> getNote(@PathVariable("id") ObjectId id);
     @PostMapping("/add/{id}")
-    ResponseEntity<Note> addNote(@RequestBody Note note,@PathVariable("id") int id);
+    ResponseEntity<Note> addNote(@RequestBody NoteDTO note, @PathVariable("id") int id);
 
     @PutMapping("/modify")
     ResponseEntity<Note> modifyNote(@RequestBody Note note);

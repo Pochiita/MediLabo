@@ -1,5 +1,6 @@
 package com.front.front.controller;
 
+import com.front.front.DTO.NoteDTO;
 import com.front.front.models.Note;
 import com.front.front.proxies.NoteProxy;
 import com.front.front.proxies.PatientProxy;
@@ -24,20 +25,20 @@ public class NoteController {
 
     @GetMapping("/single/add/{id}")
     public String createNotePage(Model model,@PathVariable("id") int id){
-        Note note = new Note();
+        NoteDTO note = new NoteDTO();
         model.addAttribute("note",note);
         model.addAttribute("patientId",id);
         return "addNote";
     }
 
     @PostMapping("/single/add/process/{id}")
-    public String createNoteProcess (@Valid @ModelAttribute("note") Note note, BindingResult results, Model model, @PathVariable("id") int id){
+    public String createNoteProcess (@Valid @ModelAttribute("note") NoteDTO noteDTO, BindingResult results, Model model, @PathVariable("id") int id){
         if (results.hasErrors() || results.hasFieldErrors()){
-            model.addAttribute("note",note);
+            model.addAttribute("note",noteDTO);
             return "addNote";
         }
         try {
-            ResponseEntity<?> response = noteProxy.addNote(note,id);
+            ResponseEntity<?> response = noteProxy.addNote(noteDTO,id);
             return "redirect:/patients/single/"+id;
         }catch(Exception e) {
             model.addAttribute("errorAddingNote",true);

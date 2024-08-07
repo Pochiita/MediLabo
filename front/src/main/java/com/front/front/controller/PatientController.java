@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/patients")
@@ -45,9 +46,12 @@ public class PatientController {
         try {
             ResponseEntity<?> response = patientProxy.getPatientById(id);
             ResponseEntity<List<Note>> notes = noteProxy.getNotesByPatient(id);
+            for (Note note: notes.getBody()
+                 ) {
+                System.out.println(note.getId());
+            }
             model.addAttribute("patient",response.getBody());
             model.addAttribute("notes",notes.getBody());
-            System.out.println(notes.getBody());
             return "patient";
         }catch(Exception e) {
             model.addAttribute("notFindable",true);
