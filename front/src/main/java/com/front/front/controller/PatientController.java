@@ -1,10 +1,10 @@
 package com.front.front.controller;
 
 import com.front.front.DTO.PatientDTO;
+import com.front.front.models.Note;
+import com.front.front.proxies.NoteProxy;
 import com.front.front.proxies.PatientProxy;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/patients")
@@ -20,8 +21,11 @@ public class PatientController {
 
     private final PatientProxy patientProxy;
 
-    public PatientController(PatientProxy patientProxy) {
+    private final NoteProxy noteProxy;
+
+    public PatientController(PatientProxy patientProxy, NoteProxy noteProxy) {
         this.patientProxy = patientProxy;
+        this.noteProxy = noteProxy;
     }
 
     @GetMapping("/")
@@ -40,7 +44,10 @@ public class PatientController {
     public String getPatientById(Model model, @PathVariable("id") int id){
         try {
             ResponseEntity<?> response = patientProxy.getPatientById(id);
+            ResponseEntity<List<Note>> notes = noteProxy.getNotesByPatient(id);
             model.addAttribute("patient",response.getBody());
+            model.addAttribute("notes",notes.getBody());
+            System.out.println(notes.getBody());
             return "patient";
         }catch(Exception e) {
             model.addAttribute("notFindable",true);

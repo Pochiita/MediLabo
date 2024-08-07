@@ -30,7 +30,7 @@
         <div  th:if="${notDeletable}">
             <p>Impossible to delete the current profile try it later.</p>
         </div>
-        <div th:if="${error == null}">
+        <div th:if="${error == null && patient != null}">
             <h2>Patient profile</h2>
 
             <div class="single-profile">
@@ -63,6 +63,28 @@
                 <div>
                     <a th:href="@{/patients/single/modify/{id}(id=${patient.id})}">Modify</a>
                     <a th:href="@{/patients/single/delete/process/{id}(id=${patient.id})}">Delete</a>
+                </div>
+            </div>
+            <h2>Patient notes</h2>
+            <div class="notes">
+                <div th:if="${not #lists.isEmpty(notes)}">
+                    <div class="notes-container">
+                        <div class="notes-item" th:each="item : ${notes}">
+                            <div class="notes-overflowed">
+                                <p th:text="${item.date}"></p>
+                                <div class="">
+                                    <p th:text="${item.note}"></p>
+                                </div>
+                            </div>
+                            <a th:href="@{/notes/single/modify/{id}(id=${item.id})}">Modify</a>
+                            <a th:href="@{/notes/single/delete/process/{id}(id=${item.id})}">Delete</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div >
+                    <a th:href="@{/notes/single/add/{id}(id=${patient.id})}">Create a note</a>
                 </div>
             </div>
 
