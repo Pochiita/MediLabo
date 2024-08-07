@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -17,25 +19,25 @@ public class Patient {
 
     @Id
     @GeneratedValue
-    int id;
+    private int id;
 
     @Column(nullable = false)
     @NotNull
-    String firstname;
+    private String firstname;
 
     @Column(nullable = false)
-    String lastname;
+    private String lastname;
 
     @Column(nullable = false)
-    String bd;
+    private LocalDate bd;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    Gender gender;
+    private Gender gender;
 
     @Column(nullable = true)
-    String address;
+    private String address;
 
     @Column(nullable = true)
-    String phone;
+    private String phone;
 }

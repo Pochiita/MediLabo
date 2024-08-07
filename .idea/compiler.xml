@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="note" />
+        <module name="risk" />
         <module name="front" />
         <module name="gateway" />
         <module name="patient" />
@@ -20,6 +21,7 @@
       <module name="gateway" options="-parameters" />
       <module name="note" options="-parameters" />
       <module name="patient" options="-parameters" />
+      <module name="risk" options="-parameters" />
     </option>
   </component>
 </project>

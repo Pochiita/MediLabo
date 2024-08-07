@@ -4,7 +4,10 @@ import com.patient.patient.models.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -13,26 +16,26 @@ import lombok.*;
 @Setter
 public class PatientDTO {
 
-    int id;
+    private int id;
 
     @NotNull
     @NotEmpty
-    String firstname;
+    private String firstname;
 
     @NotNull
     @NotEmpty
-    String lastname;
+    private String lastname;
 
     @NotNull
-    @NotEmpty
-    String bd;
+    @PastOrPresent
+    private LocalDate bd;
 
     @Enumerated(EnumType.STRING)
     @NotNull
     @NotEmpty
-    Gender gender;
+    private Gender gender;
 
-    String address;
+    private String address;
 
-    String phone;
+    private String phone;
 }

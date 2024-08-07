@@ -47,12 +47,9 @@ public class NoteController {
     }
 
     @GetMapping("/single/modify/{id}")
-    public String modifyNotePage(Model model,@PathVariable("id") ObjectId noteId){
+    public String modifyNotePage(Model model,@PathVariable("id") String noteId){
         try {
             ResponseEntity<Note> response = noteProxy.getNote(noteId);
-            System.out.println(response.getBody().getClass());
-            System.out.println(response.getBody().getPatientId());
-
             model.addAttribute("note",response.getBody());
             return "modifyNote";
         }catch(Exception e) {
@@ -62,7 +59,7 @@ public class NoteController {
     }
 
     @PostMapping("/single/modify/process/{id}")
-    public String modifyNoteProcess (@Valid @ModelAttribute("patient")Note note,@PathVariable("id") ObjectId id, BindingResult results,Model model){
+    public String modifyNoteProcess (@Valid @ModelAttribute("patient")Note note,@PathVariable("id") String id, BindingResult results,Model model){
         if (results.hasErrors() || results.hasFieldErrors()){
             model.addAttribute("note",note);
             return "modifyNote";
@@ -82,7 +79,7 @@ public class NoteController {
     }
 
     @GetMapping("/single/delete/process/{id}")
-    public String deleteNoteProcess (@PathVariable("id") ObjectId id,Model model) {
+    public String deleteNoteProcess (@PathVariable("id") String id,Model model) {
         try {
             ResponseEntity<Note> toDelete = noteProxy.getNote(id);
             ResponseEntity<?> response = noteProxy.deleteNote(id);

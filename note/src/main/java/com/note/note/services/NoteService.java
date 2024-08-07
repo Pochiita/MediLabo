@@ -2,6 +2,7 @@ package com.note.note.services;
 
 import com.note.note.models.Note;
 import com.note.note.repository.NoteRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class NoteService {
         }
     }
 
-    public Note getNoteById(int id){
+    public Note getNoteById(String id){
         try {
             return noteRepository.findById(id)
                     .orElseThrow(() -> new RuntimeException("Note not found for ID " + id));
@@ -33,11 +34,15 @@ public class NoteService {
         }
     }
 
-    public Note saveNote(Note note) {
+    public Note saveNote(Note note,int id) {
+        System.out.println(note.getId());
         try {
             note.setDate(new Date());
+            note.setPatientId(id);
+            System.out.println(note.getId());
             return noteRepository.save(note);
         } catch (Exception e) {
+            System.out.println("hello");
             throw new RuntimeException("Unable to save note", e);
         }
     }
@@ -50,7 +55,7 @@ public class NoteService {
         }
     }
 
-    public void deleteNote(int id) {
+    public void deleteNote(String id) {
         try {
             noteRepository.deleteById(id);
         } catch (Exception e) {

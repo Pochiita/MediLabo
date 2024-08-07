@@ -1,9 +1,13 @@
-package com.front.front.DTO;
+package com.risk.risk.DTO;
 
-import com.front.front.models.Gender;
-import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import com.risk.risk.models.Gender;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,33 +21,27 @@ public class PatientDTO {
 
     @Id
     int id;
-
-    @Column(nullable = false)
     @NotNull
     @NotEmpty
     @NotBlank
     String firstname;
 
-    @Column(nullable = false)
+
     @NotNull
     @NotEmpty
     @NotBlank
 
     String lastname;
 
-    @Column(nullable = false)
     @NotNull
     @PastOrPresent
     LocalDate bd;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @NotNull
     Gender gender;
 
-    @Column(nullable = true)
     String address;
 
-    @Column(nullable = true)
     String phone;
 }

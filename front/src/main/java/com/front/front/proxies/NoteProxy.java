@@ -16,7 +16,7 @@ public interface NoteProxy {
     ResponseEntity<List<Note>> getNotesByPatient(@PathVariable("patientId") int patientId);
 
     @GetMapping("/{id}")
-    ResponseEntity<Note> getNote(@PathVariable("id") ObjectId id);
+    ResponseEntity<Note> getNote(@PathVariable("id") String id);
     @PostMapping("/add/{id}")
     ResponseEntity<Note> addNote(@RequestBody NoteDTO note, @PathVariable("id") int id);
 
@@ -24,5 +24,5 @@ public interface NoteProxy {
     ResponseEntity<Note> modifyNote(@RequestBody Note note);
 
     @GetMapping("/delete/{id}")
-    ResponseEntity<String> deleteNote(@PathVariable("id") ObjectId id);
+    ResponseEntity<String> deleteNote(@PathVariable("id") String id);
 }

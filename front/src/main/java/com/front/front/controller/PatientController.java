@@ -76,7 +76,7 @@ public class PatientController {
 
         try {
             ResponseEntity<?> response = patientProxy.addPatient(patientDTO);
-            return "redirect:/patients";
+            return "redirect:/patients/";
         }catch(Exception e) {
             model.addAttribute("error",true);
             return "redirect:/patients/single/add";

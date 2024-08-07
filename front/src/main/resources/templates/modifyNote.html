@@ -27,7 +27,10 @@
         <div th:if="${notFindable}">
             <p>Something went wrong on our side. Please check the app later.</p>
         </div>
-        <div th:if="${notFindable == null}">
+        <div th:if="${errorNote}">
+            <p>Something went wrong on our side. Please check the app later.</p>
+        </div>
+        <div th:if="${notFindable == null && errorNote == null}">
             <h2>Note registration</h2>
 
             <form  th:action="@{/notes/single/modify/process/{id}(id=${note.id})}"  th:object="${note}" method="post" novalidate>
