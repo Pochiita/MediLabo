@@ -49,6 +49,7 @@ public class RiskService {
                 if (text.contains(toCompare)){
                     count++;
                 }
+                break;
             }
         }
         return count;
