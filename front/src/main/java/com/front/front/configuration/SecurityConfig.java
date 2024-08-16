@@ -25,7 +25,7 @@ public class SecurityConfig {
      * Configures the security filter chain for the application.
      *
      * This method defines the security rules for HTTP requests. It allows unauthenticated access
-     * to all endpoints under the "/patient/**" pattern while requiring authentication for all other requests.
+     * to all endpoints under the "/patients/**" pattern while requiring authentication for all other requests.
      *
      * Furthermore, it configures the login functionality with a custom login page and redirects
      * the user to the default success URL upon successful authentication. It also sets up the logout
@@ -37,7 +37,8 @@ public class SecurityConfig {
      */
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests((req) -> req
+        http
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/patients/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -46,13 +47,13 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login")
                         .permitAll()
                 )
-                .formLogin(formLogin -> formLogin
-                        .successHandler(myCustomSuccessHandler())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/patients/", true)
+                        .permitAll()
                 );
 
-
         return http.build();
-
     }
 
 
@@ -82,11 +83,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public AuthenticationSuccessHandler myCustomSuccessHandler() {
-        SimpleUrlAuthenticationSuccessHandler successHandler = new SimpleUrlAuthenticationSuccessHandler();
-        successHandler.setDefaultTargetUrl("/patients/");
-        return successHandler;
-    }
+
 
 }

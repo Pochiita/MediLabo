@@ -4,8 +4,26 @@ nav.navbar{
 }
 
 nav img{
-    width:10%;
+    width:35%;
 }
+
+.user-items{
+   flex-wrap:wrap;
+   gap:5%;
+}
+
+.user-items > div{
+    width:30%
+
+}
+
+.name-container{
+    text-align:center;
+    color:#d53828;
+    font-weight: 600;
+    font-size: 30px;
+}
+
 
 form.border{
     border:solid 1px #d53828 !important;
@@ -23,4 +41,90 @@ button{
     text-decoration:none;
     font-weight:600;
     font-family:sans-serif;
+}
+
+.base-info{
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-container img{
+    max-width:100%
+}
+
+.bd-container{
+    display:flex;
+    gap:5px;
+
+}
+
+.gender-container{
+    display:flex;
+    gap:5px;
+}
+
+.cta a{
+    text-decoration:none;
+    color:white;
+    padding:5px 10px;
+    background-color:#d53828;
+    border-radius:5px;
+    margin:0 1em;
+}
+
+.notes-overflowed > div{
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .3s ease;
+}
+
+.notes-overflowed{
+    border: solid 1px red;
+    padding: .3em;
+}
+
+.notes-overflowed p{
+    margin:0;
+}
+
+
+.notes-overflowed div > p{
+    overflow:hidden;
+    white-space: break-spaces;
+}
+
+.notes-overflowed.active > div{
+    grid-template-rows: 1fr;
+}
+
+notes-overflowed::hover{
+    cursor:pointer;
+}
+
+.notes-item{
+    margin-bottom:1em;
+}
+
+.notes-container a{
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    background-color: #d53828;
+    border-radius: 5px;
+    margin: 0 1em;
+    display: inline-block;
+    margin-top: 1em;
+}
+
+.cta-create a{
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    background-color: #d53828;
+    border-radius: 5px;
+    margin: 0 1em;
+    width:fit-content;
 }

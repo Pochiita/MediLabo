@@ -4,6 +4,7 @@ import com.front.front.DTO.PatientDTO;
 import com.front.front.models.Note;
 import com.front.front.proxies.NoteProxy;
 import com.front.front.proxies.PatientProxy;
+import com.front.front.proxies.RiskProxy;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,9 +25,11 @@ public class PatientController {
 
     private final NoteProxy noteProxy;
 
-    public PatientController(PatientProxy patientProxy, NoteProxy noteProxy) {
+    private final RiskProxy riskProxy;
+    public PatientController(PatientProxy patientProxy, NoteProxy noteProxy,RiskProxy riskProxy) {
         this.patientProxy = patientProxy;
         this.noteProxy = noteProxy;
+        this.riskProxy = riskProxy;
     }
 
     @GetMapping("/")
@@ -45,13 +48,13 @@ public class PatientController {
     public String getPatientById(Model model, @PathVariable("id") int id){
         try {
             ResponseEntity<?> response = patientProxy.getPatientById(id);
+
             ResponseEntity<List<Note>> notes = noteProxy.getNotesByPatient(id);
-            for (Note note: notes.getBody()
-                 ) {
-                System.out.println(note.getId());
-            }
+
+            String state = riskProxy.getPatientById(id);
             model.addAttribute("patient",response.getBody());
             model.addAttribute("notes",notes.getBody());
+            model.addAttribute("risk",state);
             return "patient";
         }catch(Exception e) {
             model.addAttribute("notFindable",true);

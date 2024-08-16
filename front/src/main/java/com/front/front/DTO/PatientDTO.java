@@ -5,6 +5,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -18,32 +19,26 @@ public class PatientDTO {
     @Id
     int id;
 
-    @Column(nullable = false)
-    @NotNull
-    @NotEmpty
-    @NotBlank
+    @NotNull(message = "Firstname cannot be null")
+    @NotEmpty(message = "Firstname cannot be empty")
+    @NotBlank(message = "Firstname cannot be blank")
     String firstname;
 
-    @Column(nullable = false)
-    @NotNull
-    @NotEmpty
-    @NotBlank
-
+    @NotNull(message = "Lastname cannot be null")
+    @NotEmpty(message = "Lastname cannot be empty")
+    @NotBlank(message = "Lastname cannot be blank")
     String lastname;
 
-    @Column(nullable = false)
-    @NotNull
-    @PastOrPresent
+    @NotNull(message = "Birthdate cannot be null")
+    @PastOrPresent(message = "Birthdate must be in the past or present")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate bd;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @NotNull
+    @NotNull(message = "Gender cannot be null")
     Gender gender;
 
-    @Column(nullable = true)
     String address;
 
-    @Column(nullable = true)
     String phone;
 }
