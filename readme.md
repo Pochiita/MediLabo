@@ -1,5 +1,5 @@
 
-# Medilbo
+# Medilabo
 
 ## Prérequis
 
