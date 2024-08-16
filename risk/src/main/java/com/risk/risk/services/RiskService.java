@@ -25,21 +25,45 @@ public class RiskService {
         this.noteProxy = noteProxy;
     }
 
+    /**
+     * Checks if the patient is a man under 30 years old.
+     *
+     * @param patient The patient to check.
+     * @return True if the patient is a man under 30, false otherwise.
+     */
     private boolean isManUnder30(PatientDTO patient){
         return getAge(patient.getBd()) <30 && patient.getGender().equals(Gender.M);
     }
 
+    /**
+     * Checks if the patient is a woman under 30 years old.
+     *
+     * @param patient The patient to check.
+     * @return True if the patient is a woman under 30, false otherwise.
+     */
     private boolean isWomanUnder30(PatientDTO patient){
         return getAge(patient.getBd()) <30 && patient.getGender().equals(Gender.F);
 
     }
 
+    /**
+     * Calculates the age of the patient based on their birth date.
+     *
+     * @param birthDate The patient's birth date.
+     * @return The patient's age in years.
+     */
     private int getAge(LocalDate birthDate){
         LocalDate currentDate = LocalDate.now();
         Period period = Period.between(birthDate,currentDate);
         return period.getYears();
     }
 
+    /**
+     * Counts the number of trigger notes in the patient's notes.
+     *
+     * @param notes The patient's notes.
+     * @return The number of trigger notes.
+     */
     private int countTriggersNotes (List<Note> notes){
         int count = 0;
         for (TriggerList trigger:TriggerList.values()) {
@@ -55,6 +79,13 @@ public class RiskService {
         return count;
     }
 
+    /**
+     * Determines the risk level of the patient based on their age, gender, and notes.
+     *
+     * @param patientId The ID of the patient.
+     * @return The risk level of the patient.
+     * @throws Exception If an error occurs while retrieving patient data.
+     */
     public String getRiskLevel(int patientId) throws Exception {
         try {
             PatientDTO patient = patientProxy.getPatientById(patientId).getBody();
