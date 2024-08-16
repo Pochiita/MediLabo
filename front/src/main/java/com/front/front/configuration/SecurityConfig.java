@@ -37,7 +37,7 @@ public class SecurityConfig {
      */
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
+        return http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/patients/**").permitAll()
                         .anyRequest().authenticated()
@@ -51,9 +51,8 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .defaultSuccessUrl("/patients/", true)
                         .permitAll()
-                );
+                ).build();
 
-        return http.build();
     }
 
 
